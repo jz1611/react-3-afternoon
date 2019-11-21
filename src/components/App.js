@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   deletePost() {
-
+    axios.delete(baseUrl + '/posts')
   }
 
   createPost() {
