@@ -38,12 +38,16 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  deletePost() {
-    axios.delete(baseUrl + '/posts')
+  deletePost(id) {
+    axios.delete(baseUrl + '/posts?id=' + id).then(res => {
+      this.setState({
+        posts: res.data
+      });
+    }).catch(err => console.log(err));
   }
 
   createPost() {
-
+    axios.post(baseUrl + '/posts?id=')
   }
 
   render() {
@@ -56,7 +60,12 @@ class App extends Component {
         <section className="App__content">
 
           <Compose />
-          {posts.map(post => <Post key={post.id} text={post.text} date={post.date} updatePostFn={this.updatePost} id={post.id} />)}
+          {posts.map(post => <Post key={post.id}
+                                   text={post.text}
+                                   date={post.date}
+                                   updatePostFn={this.updatePost}
+                                   deletePostFn={this.deletePost}
+                                   id={post.id} />)}
         </section>
       </div>
     );
