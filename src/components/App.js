@@ -46,8 +46,12 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  createPost() {
-    axios.post(baseUrl + '/posts?id=')
+  createPost(text) {
+    axios.post(baseUrl + '/posts', { text }).then(results => {
+      this.setState({
+        posts: results.data
+      });
+    });
   }
 
   render() {
@@ -59,7 +63,7 @@ class App extends Component {
 
         <section className="App__content">
 
-          <Compose />
+          <Compose createPostFn={ this.createPost }/>
           {posts.map(post => <Post key={post.id}
                                    text={post.text}
                                    date={post.date}
