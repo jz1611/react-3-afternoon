@@ -20,6 +20,7 @@ class App extends Component {
     this.updatePost = this.updatePost.bind( this );
     this.deletePost = this.deletePost.bind( this );
     this.createPost = this.createPost.bind( this );
+    this.searchPosts = this.searchPosts.bind( this );
   }
   
   componentDidMount() {
@@ -54,12 +55,21 @@ class App extends Component {
     });
   }
 
+  searchPosts() {
+    let searchWords = this.searchWords.value;
+    axios.get(baseUrl + '/posts?' + searchWords).then(results => {
+      this.setState({
+        posts: results.data
+      });
+    }).catch(err => console.log(err));
+  }
+
   render() {
     const { posts } = this.state;
 
     return (
       <div className="App__parent">
-        <Header />
+        <Header searchPostsFn={this.searchPosts} searchWords={this.searchWords}/>
 
         <section className="App__content">
 
